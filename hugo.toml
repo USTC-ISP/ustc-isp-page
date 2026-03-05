@@ -21,6 +21,10 @@ defaultContentLanguage = "zh-cn"
 [params]
   display_updated_date = true
   
+  # 启用 Hextra 的明亮/暗黑模式切换
+  [params.color]
+    default = "system" # 可选: light, dark, system
+
   [params.navbar]
     display_logo = true
     display_search = true

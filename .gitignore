@@ -1,1 +1,5 @@
 /public
+resources/
+_vendor/
+.hugo_build.lock
+isp_deploy_key*
