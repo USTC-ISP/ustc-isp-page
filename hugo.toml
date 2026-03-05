@@ -1,0 +1,49 @@
+baseURL = "https://ustc-isp.github.io/"
+title = "系统程序设计基础 (USTC ISP)"
+theme = "hextra"
+
+# 默认语言
+defaultContentLanguage = "zh-cn"
+
+[languages]
+  [languages.zh-cn]
+    languageName = "中文"
+    contentDir = "content"
+    weight = 1
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    noClasses = false
+
+[params]
+  display_updated_date = true
+  
+  [params.navbar]
+    display_logo = true
+    display_search = true
+  
+  [params.footer]
+    display_copyright = true
+
+[[menu.main]]
+  name = "理论讲义"
+  url = "/lectures/"
+  weight = 1
+
+[[menu.main]]
+  name = "实验指导"
+  url = "/exp/"
+  weight = 2
+
+[[menu.main]]
+  name = "课程资源"
+  url = "/resources/"
+  weight = 3
+
+[[menu.main]]
+  name = "GitHub"
+  url = "https://github.com/USTC-ISP"
+  weight = 100
