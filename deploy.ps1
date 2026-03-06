@@ -7,7 +7,7 @@ $publicDir = "public"
 
 Write-Host "--- 1. 清理并生成静态文件 ---" -ForegroundColor Cyan
 if (Test-Path $publicDir) { Remove-Item -Recurse -Force $publicDir }
-hugo --minify
+hugo --gc --environment development --minify=false --baseURL "https://ustc-isp.github.io/"
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Hugo 构建失败，请检查配置。" -ForegroundColor Red
@@ -15,6 +15,8 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host "--- 2. 初始化/更新部署目录 ---" -ForegroundColor Cyan
+# 确保 .nojekyll 存在，防止 GitHub Pages 用 Jekyll 破坏 JS
+New-Item -ItemType File -Force "$publicDir/.nojekyll" | Out-Null
 cd $publicDir
 
 # 初始化 Git (如果尚未初始化)

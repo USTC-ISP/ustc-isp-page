@@ -2,4 +2,4 @@ public/
 resources/
 _vendor/
 .hugo_build.lock
-
+temp_build/

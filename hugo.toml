@@ -20,6 +20,7 @@ defaultContentLanguage = "zh-cn"
 
 [params]
   display_updated_date = true
+  fingerprint = false
 
   [params.navbar]
     display_logo = true
@@ -27,6 +28,7 @@ defaultContentLanguage = "zh-cn"
   
   [params.footer]
     display_copyright = true
+
   [params.theme]
     default = "system"
     displayToggle = true
@@ -50,3 +52,5 @@ defaultContentLanguage = "zh-cn"
   name = "GitHub"
   url = "https://github.com/USTC-ISP"
   weight = 100
+  [menu.main.params]
+    icon = "github"
