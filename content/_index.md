@@ -26,11 +26,11 @@ date: 2026-03-05
 
 
 ## 联系方式
-** 教师 ：**
+**教师 ：**
 + [马建辉 jianhui@ustc.edu.cn](mailto:jianhui@ustc.edu.cn)
 + [王志强 zhqwang@ustc.edu.cn](mailto:zhqwang@ustc.edu.cn)
 
-** 助教 ：**
+**助教 ：**
 + [罗浩民 luohaomin@mail.ustc.edu.cn](mailto:luohaomin@mail.ustc.edu.cn)
 + [杨龙成 ylc221606@mail.ustc.edu.cn](mailto:ylc221606@mail.ustc.edu.cn)
 + [陈奕炫 immortality@mail.ustc.edu.cn](mailto:immortality@mail.ustc.edu.cn)
