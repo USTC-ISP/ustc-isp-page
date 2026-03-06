@@ -37,4 +37,6 @@ weight: 10
   {{< card link="./part1" title="章节一：在虚拟机下安装Linux系统" tag= "选做" >}}
   {{< card link="./part2" title="章节二：初探Linux"  >}}
   {{< card link="./part3" title="章节三：Codia平台介绍"  >}}
+  {{< card link="./additional" title="补充材料：WSL、Vlab与一些小工具"  >}}
+  {{< card link="./requirement" title="实验要求与检查"  >}}
 {{< /cards >}}

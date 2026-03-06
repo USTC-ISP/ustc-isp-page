@@ -6,7 +6,7 @@ weight: 16
 
 ## Windows Subsystem for Linux (WSL 2) 指南
 
-WSL 2 允许你在 Windows 上运行原生的 Linux 二进制可执行文件。对于不想折腾双系统或虚拟机的同学，这是**最推荐**的本地开发环境。
+WSL 2 允许你在 Windows 上运行原生的 Linux 二进制可执行文件。对于不想折腾双系统或虚拟机的同学，这是 最推荐 的本地开发环境。
 
 ### 1. 一键安装
 在 Windows 10 (版本 2004 及更高，内部版本 19041 及更高) 或 Windows 11 中，以**管理员身份**打开 PowerShell 或 Windows Terminal，输入：
