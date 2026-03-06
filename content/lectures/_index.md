@@ -1,10 +1,11 @@
 ---
-title: "理论讲义 (Lectures)"
+title: "课程讲义 (Lectures)"
 description: "课程每周讲义、参考书目与作业"
 weight: 1
+cascade:
+  type: docs
 ---
 
-在此可以按周发布您的理论课内容。
 
 ## 讲义列表
 
