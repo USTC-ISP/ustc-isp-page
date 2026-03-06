@@ -27,7 +27,8 @@ jobs:
       - name: Deploy to destination repo
         uses: peaceiris/actions-gh-pages@v4
         with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }} # 需要您在源码仓库配置 Deploy Key
+          personal_token: ${{ secrets.PAT_ISP }}
           external_repository: USTC-ISP/ustc-isp.github.io
-          publish_branch: main # 产物推到目标仓库的 main 分支
+          publish_branch: main
           publish_dir: ./public
+          keep_files: false
