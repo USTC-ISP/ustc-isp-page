@@ -18,6 +18,11 @@ defaultContentLanguage = "zh-cn"
   [markup.highlight]
     noClasses = false
 
+[markup.goldmark.extensions.passthrough]
+  delimiters.block = [['[', ']'], ["$$", "$$"]]
+  delimiters.inline = [["\\(", "\\)"]]
+  enable = true
+
 [params]
   display_updated_date = true
   fingerprint = false
