@@ -7,6 +7,25 @@ weight: 23
 
 ---
 
+## 3.0 安装 Git
+
+在 Linux 上，Git 通常已经预装了。如果没有，可以使用包管理器安装：
+
+```bash
+# Ubuntu/Debian
+sudo apt update
+sudo apt install git
+# Fedora
+sudo dnf install git
+# Arch
+sudo pacman -S git
+```
+
+在 Windows 上，推荐使用 [Git for Windows](https://git-scm.com/download/win). 
+
+安装完成后，你可以在命令行输入 `git --version` 来验证安装是否成功。
+
+
 ## 3.1 核心概念：Git 的“三层空间”
 
 理解 Git 的关键在于明白代码在提交过程中经过的**三个地方**。我们可以用 **“打包发货”** 来比喻：
