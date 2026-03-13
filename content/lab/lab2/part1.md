@@ -14,7 +14,7 @@ sudo apt update
 sudo apt install build-essential cmake
 ```
 
-Windows / MacOS 端的安装稍复杂，可自行搜索相关教程。
+Windows / MacOS 端的安装稍复杂，可自行搜索相关教程。在我们的实验中，只需要 Linux 端的 Make/CMake
 
 安装完成后，你可以在命令行输入 `make --version` 和 `cmake --version` 来验证安装是否成功。
 
@@ -26,44 +26,14 @@ Windows / MacOS 端的安装稍复杂，可自行搜索相关教程。
 
 ## 1.2 Makefile 核心语法
 
-`make` 本身并不知道如何编译 C 语言。你需要通过一个名为 `Makefile` 的文本文件告诉它规则。
+`make` 本身并不知道如何编译 C 语言。你需要通过一个名为 `Makefile` 的文本文件（无拓展性）告诉它规则。
 
-### 1.2.1 规则 (Rules)
-Makefile 的核心是**规则**，其格式如下：
-
-```makefile
-target: dependencies
-	command
-```
-
-1. Target (目标)：你想生成的东西（如 `main` 程序、`tool.o` 文件）。也可以是一个动作名（如 `clean`）。
-2. Dependencies (依赖)：生成目标需要哪些“原材料”（源文件或其他目标）。
-3. Command (命令)：具体怎么做（通常是 `gcc` 命令）。
-
-> [!Warning]
-> Makefile 诞生于 1976 年，当时的作者为了方便，规定命令前必须是 \t (Tab)。这个“设计缺陷”保留了 50 年。
-> 所以：命令前必须是一个 **Tab 字符**，不能是空格！
-
-{{< details title="递归检查" >}}
-
-这里的核心逻辑是：递归检查
-
-当你告诉 `make` 去生成 `target` 时，它会启动一个**递归过程**：
-
-1. **检查依赖是否存在？** 如果 `dependencies` 里的某个文件不存在，`make` 会在 Makefile 中寻找是否有其他规则可以生成这个“原材料”。
-2. **检查是否需要更新？** 如果 `dependencies` 中任何一个文件的“最后修改时间”比 `target` 更新，`make` 就会重新执行 `command`。
-
-
-{{< /details >}}
-
-
-
-### 1.2.2 简单示例
 假设项目结构如下：
 * `main.c` (调用了 `tool.h` 中的函数)
 * `tool.c` (函数的实现)
 * `tool.h` (函数声明)
 
+如下是一个 Makefile 文件：
 ```makefile
 # 1. 最终目标(规则 A)：将两个 .o 文件链接成可执行文件
 main: main.o tool.o
@@ -85,6 +55,27 @@ clean:
     rm -f main *.o
 ```
 
+### 1.2 规则 (Rules)
+Makefile 的核心是**规则**，其格式如下：
+
+```makefile
+target: dependencies
+	command
+```
+
+1. Target (目标)：你想生成的东西（如 `main` 程序、`tool.o` 文件）。也可以是一个动作名（如 `clean`）。
+2. Dependencies (依赖)：生成目标需要哪些“原材料”（源文件或其他目标）。
+3. Command (命令)：具体执行的命令（通常是 `gcc` 命令）。
+
+> [!Warning]
+> Makefile 诞生于 1976 年，当时的作者为了方便，规定命令前必须是 \t (Tab)。这个“设计缺陷”保留了 50 年。
+> 所以：命令前必须是一个 **Tab 字符**，不能是空格！
+
+在同一个 Makefile 中可以定义多个目标，你可以通过运行 `make <targetname>` 来生成名称为 `<targetname>` 的目标，或者运行 `make`，它会运行文件中第一个 Target 为文件而非动作的目标。
+
+Makefile 通过执行你在目标下面定义的 command 来生成目标，当它发现 dependencies 缺失，它会首先寻找生成 dependencies 的目标，例如对上文的 `Makefile` 运行 `make` 指令：
+
+
 {{< details title="编译过程" >}}
 
 **当你输入 `make` 时，幕后发生了什么？**
@@ -95,6 +86,39 @@ clean:
 4. 当“原材料” `main.o` 和 `tool.o` 都准备好（或更新完）后，它最后执行**规则 A** 里的链接命令。
 
 {{< /details >}}
+
+{{< details title="递归检查" >}}
+
+这里的核心逻辑是：递归检查
+
+当你告诉 `make` 去生成 `target` 时，它会启动一个**递归过程**：
+
+1. **检查依赖是否存在？** 如果 `dependencies` 里的某个文件不存在，`make` 会在 Makefile 中寻找是否有其他规则可以生成这个“原材料”。
+2. **检查是否需要更新？** 如果 `dependencies` 中任何一个文件的“最后修改时间”比 `target` 更新，`make` 就会重新执行 `command`。
+
+
+{{< /details >}}
+
+目标名为 target 代表生成该目标会得到名为 target 的文件，但有时我们希望目标不生成文件，而是执行例如清理文件夹的工作。这是通过 `.PHONY: Target` 实现的，例如：
+
+```makefile
+.PHONY: clean
+clean:
+    rm -f main *.o
+```
+
+这里的 `clean` 就是动作名而非文件名，`make clean` 不会生成 `clean` 文件而是清理工作区。
+如果你不小心定义了
+
+```makefile
+.PHONY: main
+main: main.o tool.o
+    gcc -o main main.o tool.o
+```
+
+那么 `make main` 就作为动作执行，由于 make 不知道 `main` 是一个文件名，
+所以即使 `main.o`, `tool.o` 在上次执行后没有任何变化，
+make 也还是会重新执行 `gcc -o main main.o tool.o`
 
 
 ## 1.3 变量与自动变量
@@ -170,16 +194,6 @@ $(TARGET): $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-```
-
-### 1.3.4 伪目标
-
-有些目标（如 `clean`）并不对应实际的文件，而是一个动作的名字。为了避免和同名文件冲突，我们可以使用 `.PHONY` 声明：
-
-```makefile
-.PHONY: clean
-clean:
-    rm -f $(TARGET) $(OBJS)
 ```
 
 

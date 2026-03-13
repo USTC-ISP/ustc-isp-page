@@ -13,8 +13,7 @@ weight: 20
 
 1. **掌握 Makefile 的基本语法**：理解目标（Target）、依赖（Dependency）和命令（Command）的概念，学会使用自动化变量提高效率。
 2. **理解 CMake 的构建逻辑**：学会编写 `CMakeLists.txt`，掌握外部构建（Out-of-source Build）的标准流程。
-3. **熟练使用 Git 进行版本管理**：掌握工作区、暂存区、本地仓库的概念，熟悉 `add`, `commit`, `log`, `checkout` 等常用操作。
-4. **建立良好的开发习惯**：学会编写 `.gitignore` 过滤中间文件，保持代码仓库的整洁。
+3. **熟练使用 Git 进行版本管理**：掌握工作区、暂存区、本地仓库的概念，熟悉 `add`, `commit`, `log`, `checkout` 等常用操作。学会编写 `.gitignore` 过滤中间文件，保持远程仓库的整洁。
 
 ## 实验时间安排
 
@@ -61,5 +60,4 @@ weight: 20
 ### 助教提示 (TIPS)
 
 * **关于环境**：建议在 Linux 环境（Ubuntu/WSL2）下完成实验，避免 Windows 换行符（CRLF）带来的脚本报错。
-* **关于 Git**：请务必配置好 `user.name` 和 `user.email`，这是作为系统程序员的基本素养。
-* **禁止事项**：严禁将编译生成的二进制文件（如 `.o`, `a.out`）提交到 Git 仓库，请合理配置 `.gitignore`。
+* **关于 Git**：不要将编译生成的二进制文件（如 `.o`, `a.out`）提交到 Git 仓库，请合理配置 `.gitignore`。
