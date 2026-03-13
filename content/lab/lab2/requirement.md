@@ -62,3 +62,4 @@ Lab2_Project/
 4. **Gitee 主页图**：展示你的云端仓库页面，确认代码已同步。
 
 提交包含以上目录结构的压缩包（如 `PB25XXXXXXX-张三.zip`）到BB平台。
+（压缩包内需包含以上除build目录外所有文件：代码、Makefile、CMakeList、装有截图的报告……）
