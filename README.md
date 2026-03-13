@@ -34,20 +34,6 @@ hugo server
 
 ## 一键部署
 
-由于组织权限限制，我们采用本地编译并推送至 [ustc-isp.github.io](https://github.com/USTC-ISP/ustc-isp.github.io) 仓库。
+本站使用 GitHub Actions 实现自动部署。只需将更新提交到 `main` 分支，GitHub Actions 会自动构建并部署到 GitHub Pages。
 
-1.  **准备阶段**: 确保你拥有 `ustc-isp.github.io` 的写权限，且本地已配置 SSH 密钥。
-2.  **运行脚本** (Windows PowerShell):
-    ```powershell
-    .\deploy.ps1 "更新说明（如：发布实验二）"
-    ```
-    *脚本会自动完成：清理旧产物 -> 构建压缩版静态站 -> 推送至展示仓库的 main 分支。*
-
-## 注意事项
-
-1.  **图片链接**: 避免使用本地绝对路径，务必将图片放入 `static/` 后使用 Web 路径。
-2.  **搜索功能**: 若本地遇到 `FlexSearch` 下载导致的 TLS 超时报错，可在 `hugo.toml` 中暂时将 `params.search.enable` 设为 `false`。
-3.  **FrontMatter**: 每个 `.md` 文件顶部的 `title`, `date`, `weight` 决定了侧边栏的排序，请保持风格一致。
-
----
 有任何问题请联系 主页搭建者 罗浩民。
