@@ -31,6 +31,7 @@ weight: 20
 {{< card link="./part1" title="章节一：Make简介与Makefile编写" subtitle="Makefile的基本语法与增量编译机制" >}}
 {{< card link="./part2" title="章节二：现代构建系统：CMake" subtitle="CMakeLists.txt的编写与外部构建流程" >}}
 {{< card link="./part3" title="章节三：版本控制工具：Git" subtitle="Git的基本操作与分支管理" >}}
+{{< card link="./git入门教程.pdf" title="Git入门教程" subtitle="Git的基础知识与使用方法" >}}
 {{< card link="./requirement" title="实验要求与检查" subtitle="提交内容与验收标准" >}}
 {{< /cards >}}
 

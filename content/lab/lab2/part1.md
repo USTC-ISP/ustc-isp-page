@@ -5,6 +5,19 @@ weight: 21
 
 > 在上一章，我们还在手动输入 gcc main.c -o main。如果项目有 100 个源文件，手动编译不仅是“体力活”，更是“精细活”——改动一个文件，该重编哪些？漏掉一个怎么办？make 工具因此诞生。它不仅能一键完成所有工作，还能聪明地只处理“变动过”的部分。
 
+## 1.0 安装 Make/CMake
+
+在 Linux 上，可以使用包管理器安装：
+
+```bash
+sudo apt update
+sudo apt install build-essential cmake
+```
+
+Windows / MacOS 端的安装稍复杂，可自行搜索相关教程。
+
+安装完成后，你可以在命令行输入 `make --version` 和 `cmake --version` 来验证安装是否成功。
+
 ## 1.1 为什么需要 Make？
 
 在大型 C/C++ 项目中，通常会有许多源文件。
