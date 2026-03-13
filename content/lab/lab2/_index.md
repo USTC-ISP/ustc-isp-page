@@ -54,10 +54,3 @@ weight: 20
 * **重点概念**：Git 的三个区域（Working Tree, Index, Repository）。
 * **任务**：初始化仓库，完成多次提交，学会通过 `git log` 查看历史，并尝试使用分支（Branch）进行特性开发。
 
-
----
-
-### 助教提示 (TIPS)
-
-* **关于环境**：建议在 Linux 环境（Ubuntu/WSL2）下完成实验，避免 Windows 换行符（CRLF）带来的脚本报错。
-* **关于 Git**：不要将编译生成的二进制文件（如 `.o`, `a.out`）提交到 Git 仓库，请合理配置 `.gitignore`。
