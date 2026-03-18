@@ -25,8 +25,6 @@ weight: 33
   输出该联系人的电话号码；若不存在，则输出 `NOT FOUND`。
 - `print`
   按当前存储顺序输出所有联系人，格式为 `name:phone`，相邻记录之间用一个空格分隔；若通讯录为空，则输出 `EMPTY`。
-- `stop`
-  终止程序
 
 ## 输入格式
 
@@ -34,11 +32,13 @@ weight: 33
 
 ## 输出格式
 
-对于每一条 `find` 操作和每一条 `print` 操作，各输出一行结果。
+第一行输入一个整数 `q`，表示操作总数。
+
+接下来 `q` 行，每行是一条操作，格式如题目描述所示。
 
 ## 数据范围
 
-- 至少一个操作
+- `1 <= q <= 200`
 - 保证同时有效的联系人数量不超过 `16`
 - `name` 长度不超过 `31`，至少为 `1`，且只包含小写英文字母
 - `phone` 长度不超过 `31`，至少为 `1`，且只包含数字字符
@@ -48,6 +48,7 @@ weight: 33
 ### 输入
 
 ```text
+8
 add alice 1350000
 add bob 1391111
 find alice
@@ -56,7 +57,6 @@ find bob
 delete alice
 find alice
 print
-stop
 ```
 
 ### 输出
@@ -73,6 +73,7 @@ bob:1888888
 ### 输入
 
 ```text
+10
 print
 add tom 10086
 add tom 12345
@@ -83,7 +84,6 @@ print
 delete tom
 find tom
 print
-stop
 ```
 
 ### 输出
@@ -101,6 +101,7 @@ jerry:888
 ### 输入
 
 ```text
+11
 add ann 1
 add ben 2
 add cat 3
@@ -112,7 +113,6 @@ find cat
 delete ann
 delete cat
 print
-stop
 ```
 
 ### 输出
