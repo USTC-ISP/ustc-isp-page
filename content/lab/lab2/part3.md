@@ -179,6 +179,32 @@ git push -u origin main
 * **HTTPS 方式**：可能需要使用 **Personal Access Token (PAT)**。
 * **SSH 方式**：这是最推荐的方式。通过生成 SSH 密钥对（`ssh-keygen`），将公钥上传到服务器，实现免密提交。
 
+{{< details title="配置 SSH 密钥" closed="true" >}}
+配置 SSH 密钥后，你可以免密码安全地推送代码。
+
+### 第一步：生成密钥对
+在你的 Linux/WSL/MacOS 终端运行以下命令（若已生成可跳过）：
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@mail.ustc.edu.cn"
+```
+（一路回车即可，无需设置密码）
+
+### 第二步：获取公钥
+运行以下命令查看并复制生成的公钥内容（以 `.pub` 结尾）：
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+### 第三步：添加到 Gitee/GitHub/GitLab
+1. 登录后，点击右上角头像 -> **Setting** 。
+2. 在左侧菜单点击 **SSH Keys**。
+3. 点击 **Add new key**，将复制的公钥粘贴到 **Key** 文本框中，**Title** 可随意填写（如 "My-PC"）。**Expires at**指密钥到期时间，留空或设置一个晚于本学期期末的时间。
+4. 点击 **Add key** 保存。
+
+{{< /details >}}
+
 ---
 
 ## 3.6 章节小结：Git 常用命令速查表
