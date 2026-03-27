@@ -18,7 +18,6 @@ date: 2026-03-05
 {{< cards cols="1" >}}
   {{< card link="lab" title="实验指导" subtitle="实验安排和内容介绍" >}}
   {{< card link="lectures" title="课程讲义" subtitle="课程内容和计划安排" >}}
-  {{< card link="resources" title="课程资源" subtitle="学习材料和参考资料" >}}
 {{< /cards >}}
 
 ## 课程简介

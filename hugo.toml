@@ -48,10 +48,10 @@ defaultContentLanguage = "zh-cn"
   pageRef = "/lab/"
   weight = 2
 
-[[menu.main]]
-  name = "课程资源"
-  pageRef = "/resources/"
-  weight = 3
+# [[menu.main]]
+#   name = "课程资源"
+#   pageRef = "/resources/"
+#   weight = 3
 
 [[menu.main]]
   name = "GitHub"
