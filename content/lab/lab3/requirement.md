@@ -18,7 +18,6 @@ weight: 100
 ├── include
 │   ├── contact.h
 │   └── phonebook.h
-├── phonebook
 ├── src
 │   ├── contact.c
 │   ├── main.c
