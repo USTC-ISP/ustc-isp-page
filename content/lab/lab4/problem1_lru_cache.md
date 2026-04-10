@@ -1,5 +1,5 @@
 ---
-title: LRU题目
+title: 题目一：LRU
 weight: 43
 # draft: true
 ---
