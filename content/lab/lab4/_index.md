@@ -15,6 +15,6 @@ weight: 40
 
 {{< cards >}}
   {{< card link="./chapter1_linked_list" title="链表" subtitle="链表基础与操作逻辑" >}} 
-  {{< card link="./problem1_lru_cache" title="题目原题" subtitle="LRU 缓存实现任务详情" >}}
+  {{< card link="./problem1_lru_cache" title="LRU" subtitle="LRU 缓存实现任务详情" >}}
   {{< card link="./requirement" title="提交与检查" subtitle="提交物说明与验收标准" >}}
 {{< /cards >}}
