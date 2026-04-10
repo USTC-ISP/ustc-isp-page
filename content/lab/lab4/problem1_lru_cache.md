@@ -6,25 +6,27 @@ weight: 43
 
 ## 问题描述
 
-请你使用有头节点的链表,实现一个满足LRU(最近最少使用)缓存约束的数据结构及其基础功能.
+请你实现一个满足 LRU(最近最少使用)缓存约束 的数据结构及其基础功能.
 
-要求链表除头节点之外的内部节点在任意操作进行前和完成后均按上一次被访问(包括get和put)的时刻排序,即缓存中上一次被访问的时刻最近的节点为头节点的后继,缓存中上一次被访问的时刻最远的节点为链表末尾的节点.
+具体的来说，你需要建立一个可以容纳 `capacity` 个一一对应的 `unsigned int` - `int` 键值对的数据结构。和电话簿中一个姓名对应一个电话类似，
+这个数据结构一个 `unsigned int` 对应一个 `int`，并且最多存储 `capacity` 个这样的配对。
 
-这个数据结构需要实现以下基础功能:
+然后你需要支持以下操作：
 
-+ `LRUCache* LRUCache_create(unsigned int capacity)` 以非负整数作为容量capacity初始化LRU缓存,返回一个指向链表头节点的指针.
++ 插入功能，传入 `unsigned int key` 和 `int value`，如果数据结构中存在 `key` 则更新对应的 `value` 为传入值。
++ 查找功能，传入 `key`，查找并返回对应的 `value`，如果找不到则返回 `-1`。
 
-+ `unsigned int LRUCache_get(unsigned int key)` 如果关键字key存在于缓存中,则返回关键字key对应的值value,否则返回-1.
+由于最多存储 `capacity` 个键值对，当插入的键值对超过 `capacity` 个时，需要选择**最近最少使用**的一个 `key` 删掉（在这里意味着上一次插入或查找该 `key` 的时间离现在最远）然后才能插入新的键值对。
 
-+ `void LRUCache_put(unsigned int key, unsigned int value)` 如果关键字key已经存在于缓存中,则变更其对应的值为新的value;如果不存在,则将这组key-value插入缓存中;若此次插入会导致缓存内key-value的数量超过容量capacity,则应删去缓存中最久未使用的key-value.
+你还需要支持
 
-+ `void LRUCache_reverse(LRUCache* head)` 如果head指针非空,则逆序输出缓存中存储的key-value组,即最先输出缓存中上一次被访问的时刻最远的节点的key-value组,最后输出缓存中上一次被访问的时刻最近的节点的key-value组.
++ 逆序输出，按照最近最少使用的 key 排前面，最近刚刚使用过的 key 排后面的顺序输出键值对。
 
-+ `void LRUCache_free(LRUCache* head)` 如果head指针非空,则释放LRU缓存,完成操作后原链表所使用的内存空间被完全释放.
+你可以使用一个带头节点链表实现这个功能，每次访问某个 key，就把它从链表中间拿出放到链表最前面（即 `head->next`）。
 
-另外,请你思考:如何设计函数`get()`和`put()`使其以O(1)的平均时间复杂度运行?你可以在本次实验中额外实现这一点,不作为强制要求.
+另外,请你思考:如何设计函数`get()`和`put()`使其以 O(1) 的平均时间复杂度运行?你可以在本次实验中额外实现这一点,不作为强制要求.
 
-> `capacity`,`key`,`value`均为`unsigned int`型
+> `capacity`,`key`均为`unsigned int`型，`value` 为 `int` 型
 
 ## 输入形式
 
@@ -34,7 +36,7 @@ weight: 43
 
 ## 输出形式
 
-输出根据不同的操作分为两种类型,`get`和`rev`,而`put`没有输出.
+输出根据不同的操作分为两种类型,`get`（读取）和`rev`（逆序输出）,而`put`（插入）没有输出.
 
 连续的`get`操作输出在同一行内;而当遇到`rev`操作时,先另起一行,然后每一行输出一个节点对应的`key-value`组(`key`和`value`用单个空格分隔),`rev`的最后一行输出末尾有换行符.
 
@@ -59,17 +61,17 @@ rev
 对应的输出形如:
 
 ```text
-g_1 g_2
+get_value1 get_value2
 
-r_k1 r_v1
+rev_key1 rev_value1
 
-r_k2 r_v2
+rev_key2 rev_value2
 
-g_3 g_4
+get_value3 get_value4
 
-r_k3 r_v3
+rev_key3 rev_value3
 
-r_k4 r_v4
+rev_key4 rev_value4
 ```
 
 ## 样例输入

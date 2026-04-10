@@ -1,6 +1,7 @@
 ---
 title: 最近最少使用(Least Recently Used)算法
 weight: 42
+draft: true
 ---
 
 ## 1. 引入
