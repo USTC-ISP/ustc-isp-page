@@ -1,100 +1,104 @@
 ---
-title: 'lab5-1: 卷积性能优化'
-weight: 52
+title: 'lab5-1: MoE Top-k 路由模拟器'
+weight: 51
 draft: true
 ---
 
-## 1. 实验背景
-图像卷积是计算机视觉与人工智能中的基础计算。本实验要求你在保证结果正确的前提下，优化 C 语言卷积实现，理解缓存局部性、分支预测与循环开销对性能的影响。
+## 实验框架
+[点此下载](../lab5-1.zip)
 
 
-### 1.1 卷积是什么？
+## 题目背景
 
-从宏观来看，**卷积（Convolution）** 是一种通过周围邻域信息来改变当前像素值的运算。它通过一个小的矩阵（卷积核）对输入图像进行滑动窗口操作，生成一个新的输出图像。
+在大语言模型（LLM）的推理系统中，**MoE（Mixture of Experts，混合专家）** 是一种常见结构。
+对于每个 token，路由器（Router）会根据一组打分，选择得分最高的若干个 expert，让这些 expert 参与计算。
 
-#### 核心组成：
-1.  **输入图像**：灰度图像是一个 $N \times N$ 的数字矩阵（像素值 0-255，本实验中为 `float`）。
-2.  **卷积核/算子 (Kernel/Filter)**：一个小的数字矩阵（通常是 $3 \times 3$ 或 $5 \times 5$），它定义了如何“改变”像素。
-3.  **输出图像**：卷积运算后的结果。
+在真实 AI Infra 系统里，这一步虽然只是“选前 k 大”，却会被执行非常多次，因此 **实现是否高效** 会直接影响吞吐量。
 
----
-
-### 1.2 卷积怎么算？
-
-计算过程遵循 **“相乘并累加”** 的原则。
-
-#### 步骤详解：
-假设你有一个 $3 \times 3$ 的卷积核，要计算坐标为 $(i, j)$ 的输出像素：
-
-1.  **放置**：将卷积核的**中心点**对准输入图像的 $(i, j)$ 像素。
-2.  **点乘**：将卷积核覆盖到的所有像素点，与卷积核对应位置的权重逐一相乘。
-3.  **累加**：将这 9 个乘积相加，得到的结果就是输出图像在 $(i, j)$ 处的值。
-4.  **滑动**：向右或下移动一个单位，重复上述过程，直到覆盖全图。
-
-![卷积示意图](./图像卷积.png)
-
-#### 边界处理：Zero Padding
-当卷积核对齐到图像边缘时，一部分核会落在图像外面。本实验使用 **Zero Padding**：假设图像边界以外的所有值都是 **0**。这保证了输出图像的尺寸与输入图像完全一致。
-
-当然，实际应用中还有其他边界处理方法，但本实验只要求实现 Zero Padding。
+本题要求你使用 **C 语言** 实现一个简化版的 MoE Top-k 路由模拟器：
+给定若干 token 对若干 expert 的打分矩阵，程序需要为每个 token 选出得分最高的 `k` 个 expert，并输出路由结果以及每个 expert 被选中的次数。
 
 
-## 2. 实验任务
-你需要实现并优化函数：
+## 题目描述
 
-```c
-void convolution(int n, float *src, float *kernel, float *dst);
-```
+给定：
+
+- `T` 个 token
+- `E` 个 expert
+- 每个 token 对每个 expert 的一个整数分数 `score`
+- 一个正整数 `k`
+
+对于每个 token，需要从 `E` 个 expert 中选出 **得分最高的 `k` 个 expert**。
+
+### 规则要求
+
+1. 只允许选择 **不同的 expert**。
+2. 若多个 expert 分数相同，则 **编号更小的 expert 优先**。
+3. 输出时，每个 token 的结果按“优先级从高到低”排列：
+   - 分数高的在前
+   - 若分数相同，expert 编号小的在前
+4. 统计所有 token 路由完成后，每个 expert 被选中的总次数。
+
+### 你需要实现的核心功能
+
+请完成下列函数：
+
+- `Router* router_create(int num_experts, int top_k)`
+- `void router_route(Router* router, const int* scores, int num_tokens, RouteResult* out)`
+- `void router_destroy(Router* router)`
 
 其中：
-- `src`：输入灰度图，尺寸 `n x n`，按行连续存储。
-- `kernel`：卷积核，固定为 `5 x 5`，按行连续存储。
-- `dst`：输出图像，尺寸 `n x n`。
 
-### 2.1 Zero Padding 规则
-卷积访问到图像边界外时，像素值按 `0` 处理。
+- `scores` 是一个大小为 `num_tokens * num_experts` 的连续一维数组，按行存储：
+  - 第 `i` 个 token 对第 `j` 个 expert 的得分位于 `scores[i * num_experts + j]`
+- `out->topk_indices[i * top_k + r]` 表示第 `i` 个 token 选出的第 `r` 个 expert 编号
+- `out->topk_scores[i * top_k + r]` 表示对应得分
+- `out->expert_load[j]` 表示编号为 `j` 的 expert 被选中的次数
 
-## 3. 编程限制
-- 语言：标准 C。
-- 正确性：与 `baseline_convolution` 一致（允许微小浮点误差）。
+> 为了方便理解，这里给出一个最小样例。
+>
+>
+> **输入**
+> ```text
+> 3 4 2
+> 8 1 5 7
+> 2 9 9 1
+> 6 6 3 6
+> ```
+>
+> 含义：
+> - `T = 3`
+> - `E = 4`
+> - `k = 2`
+>
+> 三个 token 的打分分别为：
+> - token 0: `[8, 1, 5, 7]`
+> - token 1: `[2, 9, 9, 1]`
+> - token 2: `[6, 6, 3, 6]`
+>
+> **输出**
+> ```text
+> token 0: 0(8) 3(7)
+> token 1: 1(9) 2(9)
+> token 2: 0(6) 1(6)
+> load: 2 2 1 1
+> ```
+>
+> ### 样例说明 (Sample Walkthrough)
+>
+> 1. 对于 `token 0`，分数最高的两个 expert 是：
+>    - expert 0，分数 8
+>    - expert 3，分数 7
+>
+> 2. 对于 `token 1`，expert 1 和 expert 2 都是 9 分：
+>    - 因为分数相同，编号更小的 expert 1 在前
+>
+> 3. 对于 `token 2`，expert 0、1、3 都是 6 分，但只取前 2 个：
+>    - 根据“编号小优先”，选 expert 0 和 expert 1
+>
+> 4. 最终负载统计：
+>    - expert 0 被选中 2 次
+>    - expert 1 被选中 2 次
+>    - expert 2 被选中 1 次
+>    - expert 3 被选中 1 次
 
-## 4. 性能评价
-加速比定义为：
-
-$$
-Speedup_{total} = \left( \prod_{i=1}^{m} \frac{TPE_{baseline, i}}{TPE_{optimized, i}} \right)^{\frac{1}{m}}
-$$
-
-其中 **TPE (Time Per Element)** 为处理单个像素的平均纳秒数 ($TPE = \frac{T}{N^2}$)。通过对比不同尺度下的 TPE，你可以观察到性能的变化。
-
-性能基于 $N \in \{512, 1024, 2048, 4096, 8192\}$ 五个尺度下的几何平均加速比。
-
-
-## 5. 代码结构
-- `main.c`：评测驱动（正确性 + 性能）
-- `convolution.c`：你主要修改的文件
-- `convolution.h`：接口定义
-
-## 6. 运行方式
-
-编译并测试（每个测试只跑一轮）：
-
-```bash
-make test
-```
-
-性能评测（每个测试跑5轮）：
-
-```bash
-make perf
-```
-
-自定义输入：
-
-```bash
-./lab5 [rounds] [seed]
-```
-
-## 8. 提交建议
-- 提交代码与报告
-- 报告中需包含：优化思路、关键代码、性能对比等
