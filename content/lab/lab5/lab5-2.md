@@ -55,7 +55,7 @@ void convolution(int n, float *src, float *kernel, float *dst);
 - `dst`：输出图像，尺寸 `n x n`。
 
 
-## 4. 性能评价
+## 3. 性能评价
 加速比定义为：
 
 $$ 
@@ -67,12 +67,12 @@ Speedup_{total} = \left( \prod_{i=1}^{m} \frac{TPE_{baseline, i}}{TPE_{optimized
 
 正确性：结果需与 `baseline_convolution` 一致（允许微小浮点误差）。
  
-## 5. 代码结构
+## 4. 代码结构
 - `main.c`：评测驱动（正确性 + 性能）
 - `convolution.c`：你主要修改的文件
 - `convolution.h`：接口定义
 
-## 6. 运行方式
+## 5. 运行方式
 
 编译并测试（每个测试只跑一轮）：
 
