@@ -1,9 +1,11 @@
 ---
 title: 实验指导：程序性能优化方法
 weight: 53
-draft: true
 ---
 
+{{< callout type="warning">}}
+尚未正式发布，内容可能调整，仅供参考。
+{{< /callout >}}
 
 ## 1. 算法层优化
 

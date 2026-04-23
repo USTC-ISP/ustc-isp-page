@@ -1,8 +1,11 @@
 ---
 title: 'lab5-1: MoE Top-k 路由模拟器'
 weight: 51
-draft: true
 ---
+
+{{< callout type="warning">}}
+尚未正式发布，内容可能调整，仅供参考。
+{{< /callout >}}
 
 ## 实验框架
 [点此下载](../lab5-1.zip)
@@ -29,8 +32,6 @@ draft: true
 - 一个正整数 `k`
 
 对于每个 token，需要从 `E` 个 expert 中选出 **得分最高的 `k` 个 expert**。
-
-### 规则要求
 
 1. 只允许选择 **不同的 expert**。
 2. 若多个 expert 分数相同，则 **编号更小的 expert 优先**。
@@ -101,4 +102,19 @@ draft: true
 >    - expert 1 被选中 2 次
 >    - expert 2 被选中 1 次
 >    - expert 3 被选中 1 次
+>
 
+编译：
+
+```bash
+cmake -S . -B build
+cmake --build build
+```
+
+编译成功后，可执行文件位于 `build/moe_router`。
+
+运行性能测试：
+
+```bash
+./build/moe_router --bench
+```
