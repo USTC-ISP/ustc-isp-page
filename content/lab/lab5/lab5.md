@@ -3,10 +3,6 @@ title: '卷积性能优化'
 weight: 52
 ---
 
-{{< callout type="warning">}}
-尚未正式发布，内容可能调整，仅供参考。
-{{< /callout >}}
-
 ## 实验框架
 [点此下载](../lab5.zip)
 
